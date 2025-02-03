@@ -1,0 +1,116 @@
+# Mindmap: Spring REST API, RestTemplate, OpenFeign & Circuit Breaker
+
+## 1. API REST
+### 1.1 Conceito
+- REST (Representational State Transfer)
+- Interação via HTTP
+- Stateless
+
+### 1.2 Importância
+- Integração fácil entre serviços
+- Padrão amplamente adotado
+- Simplicidade e escalabilidade
+
+## 2. Diferença entre Servidor e Cliente
+### 2.1 Servidor
+- Oferece endpoints (URLs)
+- Usa `@RestController` e `@RequestMapping`
+- Processa requisições
+
+### 2.2 Cliente
+- Consome endpoints HTTP
+- Usa `RestTemplate` ou `OpenFeign`
+- Aguarda resposta (comunicação síncrona)
+
+## 3. Spring Framework
+### 3.1 Spring Boot
+- Facilita configuração
+- Reduz boilerplate
+- Inicialização rápida (Spring Initializr)
+
+### 3.2 Spring MVC/Web
+- Criação de controllers REST
+- Anotações: `@GetMapping`, `@PostMapping` etc.
+- Conversão de objetos (JSON, XML)
+
+## 4. RestTemplate
+### 4.1 Definição
+- Cliente HTTP síncrono
+- Métodos prontos (GET, POST, PUT, DELETE)
+- Integração com conversores de mensagem
+
+### 4.2 Vantagens
+- Fácil de configurar
+- Flexível e poderoso
+- Permite configurações de timeout, interceptors
+
+### 4.3 Exemplo com SWAPI
+- Configuração de Bean (`@Bean`)
+- Consumo de endpoints (ex.: `/people/1/`)
+- Mapeamento em `Map` ou POJOs
+
+### 4.4 Tratamento de Erros
+- Captura exceções (4xx, 5xx)
+- `HttpClientErrorException`, `HttpServerErrorException`
+- Uso de `ResponseErrorHandler` para tratamento global
+
+## 5. OpenFeign
+### 5.1 Definição
+- Cliente HTTP declarativo
+- Interface + anotações geram as requisições
+- Integração nativa com Spring Cloud
+
+### 5.2 Vantagens
+- Reduz boilerplate
+- Fácil manutenção
+- Suporte a balanceamento de carga (Eureka/Ribbon)
+
+### 5.3 Exemplo com SWAPI
+- `@FeignClient(name="peopleClient", url="...")`
+- Interface mapeada com `@GetMapping`
+- Classes de serviço consomem via Feign
+
+### 5.4 Tratamento de Erros
+- `FeignException` (4xx, 5xx)
+- `ErrorDecoder` para personalizar handling
+- Integrado ao ecossistema Spring Cloud
+
+## 6. Circuit Breaker
+### 6.1 Conceito
+- Padrão que evita falhas em cascata
+- "Abre" o circuito quando há muitas falhas
+- "Fecha" após período de recuperação
+
+### 6.2 Resilience4j
+- Solução moderna para resiliência
+- Suporta `@CircuitBreaker`, `@Retry`, `@RateLimiter`
+- Configurável via `application.yml`
+
+### 6.3 Exemplo
+- Anotação `@CircuitBreaker(name="...", fallbackMethod="...")`
+- Método de fallback retorna resposta padrão
+- Boas práticas para microsserviços
+
+## 7. Comparação: RestTemplate vs. OpenFeign
+### 7.1 Estilo de Programação
+- RestTemplate: Imperativo
+- OpenFeign: Declarativo
+
+### 7.2 Integração com Spring Cloud
+- RestTemplate: Configurações extras para load balancing
+- OpenFeign: Integração nativa (Eureka, Ribbon)
+
+### 7.3 Tratamento de Erros
+- RestTemplate: Exceções HTTP + `ResponseErrorHandler`
+- OpenFeign: `FeignException`, `ErrorDecoder`
+
+## 8. Conclusão
+### 8.1 Boas Práticas
+- Tratar erros de forma clara (4xx, 5xx)
+- Configurar timeouts para evitar bloqueios
+- Documentar APIs (Swagger/OpenAPI)
+
+### 8.2 Observações Finais
+- Escolha entre RestTemplate e Feign depende do contexto
+- Circuit Breaker essencial para resiliência
+- Testar e monitorar serviços continuamente
