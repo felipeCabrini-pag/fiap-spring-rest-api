@@ -1,110 +1,99 @@
-## Spring Client com RestTemplate
+<section>
+  <strong>Spring Client com RestTemplate</strong>
+</section>
 
----
+<section>
+  <strong>1. Introdução ao Conceito de Cliente HTTP em Java</strong>
 
-### 1. Introdução ao Conceito de Cliente HTTP em Java
+  <ul>
+    <li>Um <strong>cliente HTTP</strong> é um software ou biblioteca que faz requisições a um servidor e processa respostas, usando o protocolo HTTP.</li>
+    <li>Gerencia métodos (GET, POST, etc.), URL, cabeçalhos (headers) e corpo (body) de requisições, se necessário.</li>
+  </ul>
+</section>
 
-#### 1.1 O que é um Cliente HTTP?
-- Um **cliente HTTP** é um software ou biblioteca que faz requisições a um servidor e processa respostas, usando o protocolo **HTTP**.
-- Ele gerencia **métodos** (GET, POST, etc.), **URL**, **cabeçalhos** (headers) e, quando necessário, **corpo** (body) de requisições.
+<section>
+  <strong>1.2 Fluxo Geral de uma Chamada HTTP</strong>
 
-#### 1.2 Fluxo Geral de uma Chamada HTTP
-1. **Montagem da Requisição**  
-   - Define método HTTP, URL, cabeçalhos e corpo (opcional).
-2. **Envio da Requisição**  
-   - Abre conexão (TCP/SSL), envia a requisição pela rede.
-3. **Processamento no Servidor**  
-   - O servidor valida e processa, retornando código HTTP (200, 404 etc.) e possivelmente um corpo (JSON/XML).
-4. **Recebimento da Resposta**  
-   - O cliente lê o **código HTTP**, cabeçalhos e converte o **body** se houver.
+  <ul>
+    <li><strong>Montagem da Requisição:</strong> Define método HTTP, URL, cabeçalhos e, opcionalmente, body.</li>
+    <li><strong>Envio da Requisição:</strong> Abre conexão e envia pela rede (TCP/SSL).</li>
+    <li><strong>Processamento no Servidor:</strong> O servidor verifica e retorna código HTTP (200, 404, etc.) e possivelmente um JSON/XML.</li>
+    <li><strong>Recebimento da Resposta:</strong> O cliente lê código HTTP, cabeçalhos e converte body, se houver.</li>
+  </ul>
+</section>
 
-#### 1.3 Comunicação Síncrona
-- **Bloco de Espera**: O cliente aguarda a resposta antes de prosseguir.
-- **Uso Comum**: Fluxos que necessitam de resposta imediata.
-- **Desvantagem**: Pode bloquear muitas threads em cenários de alto tráfego.
+<section>
+  <strong>1.3 Comunicação Síncrona</strong>
 
----
+  <ul>
+    <li>O cliente fica em <strong>bloco de espera</strong> até receber a resposta.</li>
+    <li>É útil quando precisamos de resposta imediata para continuar o fluxo.</li>
+    <li>Pode causar bloqueio excessivo em cenários de alta concorrência.</li>
+  </ul>
+</section>
 
-### 2. Por que Fazer Chamadas HTTP de um Backend a Outro Backend?
+<section>
+  <strong>2. Por que Fazer Chamadas HTTP de um Backend a Outro Backend?</strong>
 
-- **Integração de Serviços (Microsserviços)**  
-  - Sistemas especializados que trocam dados entre si.
-- **Consumir APIs Externas**  
-  - Integração com serviços de terceiros (pagamentos, mapas etc.).
-- **Escalabilidade e Manutenibilidade**  
-  - Cada serviço funciona de forma autônoma.
-- **Reuso**  
-  - Várias aplicações podem aproveitar as mesmas funcionalidades expostas.
+  <ul>
+    <li><strong>Integração de Serviços</strong>: Microsserviços trocando dados.</li>
+    <li><strong>Consumir APIs Externas</strong>: Pagamentos, geolocalização, etc.</li>
+    <li><strong>Escalabilidade e Manutenção</strong>: Separar responsabilidades em serviços distintos.</li>
+    <li><strong>Reuso</strong>: Mesmo serviço pode ser chamado por várias aplicações.</li>
+  </ul>
+</section>
 
----
+<section>
+  <strong>3. Apresentando o RestTemplate</strong>
 
-### 3. Apresentando o RestTemplate
+  <ul>
+    <li><strong>Definição:</strong> Cliente HTTP síncrono do Spring, simples de usar.</li>
+    <li><strong>Por que Usar?</strong>
+      <ul>
+        <li>Abordagem imperativa.</li>
+        <li>Configuração rápida.</li>
+        <li>Conversores de mensagem para JSON, XML etc.</li>
+      </ul>
+    </li>
+    <li><strong>Métodos Principais:</strong>
+      <ul>
+        <li>getForObject(url, Class&lt;T&gt;)</li>
+        <li>postForObject(url, request, Class&lt;T&gt;)</li>
+        <li>exchange(url, HttpMethod, HttpEntity, Class&lt;T&gt;)</li>
+      </ul>
+    </li>
+  </ul>
+</section>
 
-#### 3.1 Definição
-- **RestTemplate**: Classe do Spring que fornece um cliente HTTP **síncrono** de fácil uso.
+<section>
+  <strong>4. Boas Práticas e Cuidados ao Fazer Chamadas HTTP</strong>
 
-#### 3.2 Por que Usá-lo?
-1. **Abordagem Imperativa**  
-2. **Configuração Rápida**  
-3. **Conversores de Mensagem** (JSON ↔ POJO, XML etc.)
+  <ul>
+    <li><strong>Definição de Timeouts:</strong> Connection e Read Timeout para evitar bloqueios.</li>
+    <li><strong>Tratamento de Erros (4xx, 5xx):</strong> Usar HttpClientErrorException, HttpServerErrorException e logs claros.</li>
+    <li><strong>Código Limpo:</strong> Centralizar lógica de chamadas em um serviço especializado.</li>
+    <li><strong>Evitar Chamadas Excessivas / Caching:</strong> Cache ou circuit breaker para reduzir uso repetido de APIs.</li>
+    <li><strong>SSL/TLS e Segurança:</strong> Garantir certificados válidos e protocolos modernos.</li>
+  </ul>
+</section>
 
-#### 3.3 Métodos Principais
-- `getForObject(url, Class<T>)`
-- `postForObject(url, request, Class<T>)`
-- `exchange(url, HttpMethod, HttpEntity, Class<T>)`
+<section>
+  <strong>5. Requisitos Não Funcionais</strong>
 
----
+  <ul>
+    <li><strong>Desempenho e Escalabilidade:</strong> Cada requisição externa adiciona latência.</li>
+    <li><strong>Observabilidade:</strong> Logs detalhados e métricas (sucesso, falha, latência).</li>
+    <li><strong>Resiliência:</strong> Retries, fallback e circuit breaker para cenários de indisponibilidade.</li>
+  </ul>
+</section>
 
-### 4. Boas Práticas e Cuidados ao Fazer Chamadas HTTP
+<section>
+  <strong>6. Conclusão</strong>
 
-#### 4.1 Definição de Timeouts
-- **Connection Timeout**: tempo máximo para estabelecer conexão.
-- **Read Timeout**: tempo máximo para receber dados.
-
-#### 4.2 Tratar Erros de Forma Apropriada
-- **HTTP 4xx**: `HttpClientErrorException`.
-- **HTTP 5xx**: `HttpServerErrorException`.
-- **Logs** e retornos de status corretos ao cliente interno.
-
-#### 4.3 Estrutura de Código Limpa
-- Centralizar chamadas HTTP em um serviço especializado.
-- Evitar duplicar lógica de endpoint e tratamento de erro.
-
-#### 4.4 Evitar Chamadas Excessivas / Caching
-- Armazenar respostas em cache quando for possível.
-- Usar **Circuit Breaker** (ex.: Resilience4j) para falhas repetidas.
-
-#### 4.5 Configuração de SSL/TLS e Segurança
-- Garantir certificados confiáveis.
-- Evitar protocolos obsoletos (TLS 1.0, 1.1).
-
----
-
-### 5. Requisitos Não Funcionais
-
-#### 5.1 Desempenho e Escalabilidade
-- Cada requisição externa gera latência.
-- Verificar se o estilo síncrono atende a demanda (ou usar *reativo* se necessário).
-
-#### 5.2 Observabilidade
-- **Logs Detalhados**: registrar tempo de resposta, status code.
-- **Métricas**: monitorar sucesso/falha, latência média.
-- **Tracing Distribuído**: em ambientes de microsserviços (Zipkin, Jaeger).
-
-#### 5.3 Resiliência
-- **Retries**: repetir em falhas temporárias.
-- **Fallback**: retornar dados default se a API estiver indisponível.
-- **Circuit Breaker**: abrir o circuito para evitar sobrecarga em caso de falhas sucessivas.
-
----
-
-### 6. Conclusão
-
-1. **RestTemplate**: Uma solução síncrona, simples e amplamente utilizada no ecossistema Spring.
-2. **Configurações Indispensáveis**: Timeouts, tratamento de erros, logs.
-3. **Requisitos Não Funcionais**: Desempenho, segurança, observabilidade e resiliência.
-4. **Próximos Passos**:  
-   - Criar um projeto Spring Boot com Bean `RestTemplate`.  
-   - Integrar a APIs públicas.  
-   - Testar cenários de erro (timeout, indisponibilidade).  
-   - Considerar uso de Circuit Breaker e caching para maior robustez.
+  <ul>
+    <li><strong>RestTemplate:</strong> Uma solução síncrona e simples no ecossistema Spring.</li>
+    <li>Configurações indispensáveis: Timeouts, tratamento de erros, logs.</li>
+    <li>Requisitos não funcionais: Desempenho, segurança, observabilidade.</li>
+    <li><strong>Próximos Passos:</strong> Criar um projeto Spring Boot, consumir APIs públicas e testar cenários de erro.</li>
+  </ul>
+</section>
