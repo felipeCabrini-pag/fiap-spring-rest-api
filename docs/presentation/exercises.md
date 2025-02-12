@@ -83,28 +83,10 @@
   <ul>
     <li>Consultar o perfil do treinador (GET /trainer/{id}) – mostrando informações como pontos acumulados, número de Pokémon capturados e ranking.</li>
     <li>Atualizar ou liberar (excluir) um Pokémon capturado, simulando uma ação de "liberação" ou "troca" no jogo.</li>
-    <li>Implementar autenticação simples (pode ser via tokens ou identificação de usuário) para associar as capturas aos treinadores.</li>
     <li>Tratar erros e realizar validações (por exemplo, impedir captura duplicada se aplicável, tratar indisponibilidade da PokéAPI, etc.).</li>
   </ul>
 </section>
 
-<section>
-  <strong>Exercício 3: Requisitos Não Funcionais</strong>
-  <ul>
-    <li>Persistência: Utilizar Spring Data JPA para gerenciar entidades como Pokémon e Treinador.</li>
-    <li>Escalabilidade: Considerar o uso de conexões e cache para minimizar chamadas repetidas à PokéAPI.</li>
-    <li>Observabilidade: Implementar logs detalhados e métricas para monitorar o desempenho dos endpoints e a integridade dos dados.</li>
-  </ul>
-</section>
-
-<section>
-  <strong>Exercício 3: Gamification</strong>
-  <ul>
-    <li>Criar um sistema de pontos e rankings onde os treinadores acumulam pontos com base no valor, raridade e atributos dos Pokémon capturados.</li>
-    <li>Implementar um leaderboard (por exemplo, GET /leaderboard) que exiba os melhores treinadores.</li>
-    <li>Oferecer recompensas ou mensagens motivacionais, como "Você evoluiu para um Treinador de Elite!" quando atingir certos marcos.</li>
-  </ul>
-</section>
 
 <section>
   <strong>Exercício 3: Entrega</strong>
