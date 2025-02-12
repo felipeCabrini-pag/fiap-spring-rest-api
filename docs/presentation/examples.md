@@ -6,7 +6,10 @@
 <section>
   <strong>1. RestTemplate</strong>
   <p><strong>Descrição:</strong> Utiliza uma abordagem imperativa e síncrona. Ideal para aplicações onde o bloqueio da thread não é um problema ou em projetos legados.</p>
-  <p><strong>Exemplo de Código:</strong></p>
+</section>
+
+<section>
+  <strong>Exemplo de Código com RestTemplate</strong>
   <pre><code class="java">
 // Exemplo simples com RestTemplate
 RestTemplate restTemplate = new RestTemplate();
@@ -14,6 +17,10 @@ String url = "https://swapi.dev/api/people/1/";
 Map&lt;String, Object&gt; response = restTemplate.getForObject(url, Map.class);
 System.out.println("Nome: " + response.get("name"));
   </code></pre>
+</section>
+
+<section>
+  <strong>Configuração de RestTemplate</strong>
   <p><strong>Bom Exemplo:</strong> Configurar o RestTemplate como um bean centralizado com timeouts e tratamento de erros.</p>
   <pre><code class="java">
 &#64;Configuration
@@ -42,7 +49,11 @@ public class SwapiRestTemplateService {
     }
 }
   </code></pre>
-  <p><strong>Mau Exemplo:</strong> Instanciar RestTemplate diretamente dentro do método, sem configuração ou tratamento de erros.</p>
+</section>
+
+<section>
+  <strong>Mau Exemplo: Uso Incorreto de RestTemplate</strong>
+  <p>Instanciar RestTemplate diretamente dentro do método, sem configuração ou tratamento de erros:</p>
   <pre><code class="java">
 // Mau exemplo: instanciando RestTemplate diretamente sem timeouts ou tratamento centralizado
 &#64;RestController
@@ -59,7 +70,10 @@ public class SimpleController {
 <section>
   <strong>2. OpenFeign</strong>
   <p><strong>Descrição:</strong> Abordagem declarativa que reduz boilerplate. Define interfaces com anotações para mapear endpoints, e o Spring Cloud gera a implementação automaticamente.</p>
-  <p><strong>Exemplo de Interface Feign:</strong></p>
+</section>
+
+<section>
+  <strong>Exemplo de Interface Feign</strong>
   <pre><code class="java">
 &#64;FeignClient(name = "swapiClient", url = "https://swapi.dev/api")
 public interface SwapiFeignClient {
@@ -67,7 +81,10 @@ public interface SwapiFeignClient {
     Map&lt;String, Object&gt; getPerson(@PathVariable("id") int id);
 }
   </code></pre>
-  <p><strong>Exemplo de Serviço que Consome a Interface:</strong></p>
+</section>
+
+<section>
+  <strong>Serviço Usando Feign</strong>
   <pre><code class="java">
 &#64;Service
 public class SwapiFeignService {
@@ -82,6 +99,10 @@ public class SwapiFeignService {
     }
 }
   </code></pre>
+</section>
+
+<section>
+  <strong>Bom e Mau Uso do Feign</strong>
   <p><strong>Bom Exemplo:</strong> Uso de DTOs específicos e tratamento adequado de erros com <code>ErrorDecoder</code> (não mostrado aqui para brevidade).</p>
   <p><strong>Mau Exemplo:</strong> Usar tipos genéricos (como <code>Object</code>) e não definir parâmetros corretamente.</p>
 </section>
@@ -89,7 +110,10 @@ public class SwapiFeignService {
 <section>
   <strong>3. Rest Client Declarativo (Spring 6) com Java 21</strong>
   <p><strong>Descrição:</strong> Nova abordagem nativa do Spring 6 para criar clientes HTTP declarativos sem dependências externas. Utiliza anotações como <code>@HttpExchange</code> e integra internamente com <code>WebClient</code>.</p>
-  <p><strong>Exemplo de Interface Rest Client:</strong></p>
+</section>
+
+<section>
+  <strong>Exemplo de Interface Rest Client</strong>
   <pre><code class="java">
 &#64;HttpExchange("/people")
 public interface SwapiRestClient {
@@ -97,7 +121,10 @@ public interface SwapiRestClient {
     Map&lt;String, Object&gt; getPerson(@PathVariable("id") int id);
 }
   </code></pre>
-  <p><strong>Exemplo de Serviço que Consome o Rest Client:</strong></p>
+</section>
+
+<section>
+  <strong>Serviço Usando o Rest Client</strong>
   <pre><code class="java">
 &#64;Service
 public class SwapiRestClientService {
@@ -112,8 +139,12 @@ public class SwapiRestClientService {
     }
 }
   </code></pre>
+</section>
+
+<section>
+  <strong>Observações e Erros Comuns</strong>
   <p><strong>Observação:</strong> Em Java 21, se o método for declarado de forma imperativa (retornando <code>Map&lt;String, Object&gt;</code> diretamente), as chamadas podem bloquear threads. Entretanto, usando <em>virtual threads</em> você pode minimizar o impacto do bloqueio.</p>
-  <p><strong>Mau Exemplo:</strong> Não utilizar as anotações corretamente, por exemplo:</p>
+  <p><strong>Mau Exemplo:</strong> Não utilizar as anotações corretamente:</p>
   <pre><code class="java">
 &#64;HttpExchange("/people")
 public interface BadSwapiClient {
@@ -127,9 +158,8 @@ public interface BadSwapiClient {
 <section>
   <strong>Conclusão dos Exemplos</strong>
   <ul>
-    <li><strong>RestTemplate</strong>: Bom para projetos legados e chamadas simples, mas requer mais configuração manual.</li>
-    <li><strong>OpenFeign</strong>: Oferece uma abordagem declarativa e menos boilerplate, ideal para microsserviços no ecossistema Spring Cloud.</li>
-    <li><strong>Rest Client (Spring 6)</strong>: Abordagem nativa moderna que unifica a simplicidade do declarativo com o poder do WebClient, sendo uma opção promissora para novos projetos.</li>
+    <li><strong>RestTemplate:</strong> Bom para projetos legados e chamadas simples, mas requer mais configuração manual.</li>
+    <li><strong>OpenFeign:</strong> Oferece uma abordagem declarativa e menos boilerplate, ideal para microsserviços no ecossistema Spring Cloud.</li>
+    <li><strong>Rest Client (Spring 6):</strong> Abordagem nativa moderna que unifica a simplicidade do declarativo com o poder do WebClient, sendo uma opção promissora para novos projetos.</li>
   </ul>
-  <p>Esses exemplos demonstram como consumir a API SWAPI de forma consistente e organizada, cada um com suas vantagens e particularidades.</p>
 </section>

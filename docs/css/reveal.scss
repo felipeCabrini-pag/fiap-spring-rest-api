@@ -1384,8 +1384,7 @@ $controlsArrowAngleActive: 36deg;
  *********************************************/
 
 .reveal.rtl .slides,
-.reveal.rtl .slides h1,
-.reveal.rtl .slides h2,
+
 .reveal.rtl .slides h3,
 .reveal.rtl .slides h4,
 .reveal.rtl .slides h5,
@@ -1393,15 +1392,24 @@ $controlsArrowAngleActive: 36deg;
 	direction: rtl;
 	font-family: sans-serif;
 }
+.reveal.rtl .slides h1,
+.reveal.rtl .slides h2 {
+	font-size: 24px;
+}
+
+
+  
 
 .reveal.rtl pre,
 .reveal.rtl code {
 	direction: ltr;
+	font-size: 16px;
 }
 
 .reveal.rtl ol,
 .reveal.rtl ul {
 	text-align: right;
+	font-size: 18px;
 }
 
 .reveal.rtl .progress span {
@@ -2008,6 +2016,7 @@ $notesWidthPercent: 25%;
 		transform: scale(var(--slide-scale)) translate(-50%, -50%) !important;
 		transform-style: flat !important;
 		transform-origin: 0 0 !important;
+		font-size: 18px;
 	}
 
 	.slide-background {

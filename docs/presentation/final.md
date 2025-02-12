@@ -3,17 +3,35 @@
 </section>
 
 <section>
-| **Aspecto**                           | **RestTemplate**                                                                                         | **OpenFeign**                                                                                                            | **Rest Client (Spring 6)**                                                                                                  |
-|---------------------------------------|-----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| **Estilo de Programação**             | - Imperativo: uso direto de métodos como `getForObject()`, `exchange()`, etc.                             | - Declarativo: define-se uma interface com `@FeignClient` e anotações como `@GetMapping`, `@PostMapping`                    | - Declarativo: usa interfaces com anotações nativas como `@HttpExchange`, `@GetExchange`, `@PostExchange`                        |
-| **Dependências**                      | - Parte do Spring Web; sem dependências extras                                                            | - Requer a dependência `spring-cloud-starter-openfeign`; integra com Spring Cloud                                           | - Nativo do Spring 6 / Spring Boot 3; sem dependências externas                                                                   |
-| **Síncrono vs. Reativo**              | - Síncrono (bloqueante)                                                                                   | - Síncrono por padrão (bloqueante); pode ser adaptado para padrões assíncronos com configurações adicionais                   | - Pode ser usado de forma síncrona ou reativa, dependendo dos métodos declarados e da configuração do subjacente (WebClient)         |
-| **Boilerplate**                       | - Requer mais código para configurar cada chamada (gerenciamento manual de URL, headers, etc.)             | - Menos código repetitivo, pois a implementação é gerada automaticamente a partir das interfaces e anotações               | - Menos boilerplate que o WebClient puro; permite definir endpoints de forma declarativa sem lógica repetitiva                        |
-| **Integração com Spring Cloud**       | - Exige configurações extras para service discovery e load balancing                                       | - Excelente integração: suporta nativamente service discovery (Eureka), load balancing (Ribbon/SC LoadBalancer) e circuit breaker (Resilience4j/Hystrix) | - Integração nativa limitada; pode ser combinado com outras soluções para discovery e resiliência manualmente                        |
-| **Configuração de Erros/Timeout**     | - Configurável via `ResponseErrorHandler` e `ClientHttpRequestFactory`                                     | - Configurável via propriedades e customização com `ErrorDecoder`                                                          | - Configurável através do WebClient subjacente (usando métodos como `onStatus()` e propriedades de timeout do Reactor)                |
-| **Uso de DTOs (POJOs)**               | - Requer mapeamento manual ou uso de conversores para transformar JSON em objetos Java                     | - Facilita o uso de DTOs: os métodos da interface declaram os tipos de entrada/saída                                      | - Similar ao Feign: permite declaração clara de DTOs usando anotações na interface                                                    |
-| **Resiliência (Retries, Circuit Breaker)** | - Integração manual com bibliotecas como Resilience4j ou Hystrix                                          | - Fácil de integrar com circuit breakers e fallback, geralmente com configuração mínima                                     | - Depende da configuração do WebClient; pode ser combinado com bibliotecas para implementar resiliência                                |
-| **Cenários de Uso**                   | - Projetos legados ou onde chamadas bloqueantes são aceitáveis; uso pontual de APIs externas                | - Ideal para ambientes de microsserviços que se beneficiam de uma abordagem declarativa e integração nativa com SC         | - Recomendado para novos projetos que utilizam Spring 6, onde se deseja um cliente HTTP nativo com menor boilerplate e potencial reativo |
-| **Pontos Fortes**                     | - Simples, amplamente conhecido, sem dependências adicionais                                               | - Menos boilerplate, excelente integração com o ecossistema Spring Cloud                                                    | - Nativo do Spring 6, permite uso síncrono ou reativo, com mapeamento declarativo simples                                           |
-| **Pontos Fracos**                     | - Bloqueante, pode resultar em maior consumo de threads e código verboso                                   | - Bloqueante por padrão; depende de lib externa; adaptação assíncrona exige configurações adicionais                         | - Relativamente novo no ecossistema; funcionalidades avançadas (como service discovery nativo) podem estar em desenvolvimento         |
+| **Aspecto**                   | **RestTemplate**                                      | **OpenFeign**                                             | **Rest Client (Spring 6)**                                 |
+|------------------------------|------------------------------------------------------|-----------------------------------------------------------|------------------------------------------------------------|
+| **Estilo de Programação**     | Imperativo: uso direto de métodos como `getForObject()` e `exchange()` | Declarativo: define-se uma interface com `@FeignClient` e anotações | Declarativo: usa interfaces com anotações nativas como `@HttpExchange` |
+</section>
+
+<section>
+| **Dependências**              | Nativo do Spring Web, sem dependências extras        | Requer `spring-cloud-starter-openfeign`                   | Nativo do Spring 6, sem dependências externas              |
+| **Síncrono vs. Reativo**      | Síncrono (bloqueante)                                | Síncrono (bloqueante) por padrão                          | Pode ser síncrono ou reativo, dependendo da configuração   |
+</section>
+
+<section>
+| **Boilerplate**               | Requer mais código para configuração manual          | Menos código repetitivo: a implementação é gerada automaticamente | Menos boilerplate que WebClient puro: define endpoints de forma declarativa |
+</section>
+
+<section>
+| **Integração com Spring Cloud** | Integração manual                                    | Nativa: suporta service discovery, load balancing e circuit breakers | Integração limitada: pode ser combinada manualmente com outras soluções  |
+| **Configuração de Erros**      | Via `ResponseErrorHandler` e timeouts manuais        | Via `ErrorDecoder` configurável                                 | Via `onStatus` e configuração do WebClient interno          |
+</section>
+
+<section>
+| **Uso de DTOs**               | Requer mapeamento manual                             | Facilita o uso de DTOs com parâmetros declarados             | Semelhante ao Feign: usa anotações para definir DTOs       |
+| **Resiliência**               | Integração manual com bibliotecas                    | Nativa com circuit breakers (Resilience4j, Hystrix)          | Depende da configuração do WebClient                       |
+</section>
+
+<section>
+| **Cenários de Uso**           | Projetos legados ou com chamadas pontuais            | Microsserviços no ecossistema Spring Cloud                   | Novos projetos que desejam clientes nativos declarativos   |
+| **Pontos Fortes**             | Simples e amplamente conhecido                       | Menos boilerplate, fácil de integrar                         | Nativo, com suporte síncrono e reativo                     |
+</section>
+
+<section>
+| **Pontos Fracos**             | Bloqueante, pode gerar sobrecarga                    | Bloqueante por padrão, depende de uma lib externa            | Relativamente novo, algumas funcionalidades ainda evoluindo |
 </section>

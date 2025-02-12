@@ -41,7 +41,11 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
+				width: 960,
+  				height: 700,
+ 				margin: 0.1, // Ajusta as margens internas para otimização
+  				minScale: 0.5,
+  				maxScale: 1.5,
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
