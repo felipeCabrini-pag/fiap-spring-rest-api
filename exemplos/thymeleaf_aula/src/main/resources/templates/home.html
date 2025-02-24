@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div th:if="${#lists.isEmpty(pokemons)}">
+    <p>Você ainda não capturou nenhum pokemon.</p>
+</div>
+<div th:if="${!#lists.isEmpty(pokemons)}">
+    <p>tem valor dentro da sua lista</p>
+</div>
+<form th:action="@{/pokemon/capture}" method="post" class="nav-form">
+    <button type="submit" class="nav-btn">Capturar Pokemon</button>
+</form>
+
+<main>
+    <h2>Seus pokémons</h2>
+    <div class="pokemon-list">
+        <div th:if="${#lists.isEmpty(pokemons)}">
+            <p>Você ainda não capturou nenhum Pokémon.</p>
+        </div>
+        <div th:if="${!#lists.isEmpty(pokemons)}">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagem</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Nível</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="pokemon : ${pokemons}">
+                        <td><img th:src="${pokemon.imageUrl}" alt="Imagem do Pokémon" /></td>
+                        <td th:text="${pokemon.name}">Nome</td>
+                        <td th:text="${pokemon.type}">Tipo</td>
+                        <td th:text="${pokemon.level}">Nível</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<section id="thymeleaf-examples">
+    <h2> Exemplos de uso de tags Thymeleaf</h2>
+    <div>
+        <h3>th:utext</h3>
+        <p> Exibe conteudo Html sem escapar:</p>
+        <div th:utext="${rawHtml}"> Aqui será exibido o conteudo HTML sem escapar as tags</div>
+    </div>
+</section>
+
+</body>
+</html>
