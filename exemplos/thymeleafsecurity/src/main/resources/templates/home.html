@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome, <span th:text="${username}">Guest</span>!</h1>
+
+    <div class="button-container">
+        <a href="/login" class="btn">Login</a>
+        <a href="/user" class="btn" sec:authorize="hasRole('USER')">User Page</a>
+        <a href="/manager" class="btn" sec:authorize="hasRole('MANAGER')">Manager Page</a>
+        <a href="/admin" class="btn" sec:authorize="hasRole('ADMIN')">Admin Page</a>
+        <!-- Botão Admin: Habilitado apenas para ADMIN -->
+        <a href="/admin" class="btn admin-btn" sec:authorize="hasRole('ADMIN')">Admin Page</a>
+        <!-- Botão Admin Desabilitado: Visível para todos, mas desabilitado -->
+        <a href="#" class="btn admin-btn disabled" sec:authorize="!hasRole('ADMIN')">Admin Page</a>
+
+    </div>
+
+</div>
+</body>
+</html>

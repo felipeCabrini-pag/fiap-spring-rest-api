@@ -1,0 +1,15 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+</head>
+<body>
+<h1>User Dashboard</h1>
+<p>Welcome, <span th:text="${username}"></span>! This is your personal area.</p>
+<a href="/profile">View Profile</a>
+</body>
+</html>
